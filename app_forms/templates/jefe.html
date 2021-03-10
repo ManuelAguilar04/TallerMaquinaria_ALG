@@ -1,0 +1,65 @@
+{% extends "base.html" %}  
+{% load static %}
+
+
+{% block contenido %}
+
+<div class="container-xl" id="equipo">
+    <h1>Gestión de Coordinadores</h1> 
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            
+            {% if codJefe %}
+            <form action="{% url 'editar_jefe' codJefe %}" method="post">
+            {% else %}
+            <form action=" {% url 'jefe' %} " method="post">
+            {% endif %}
+                {% csrf_token %}
+                {{ form.as_p }}
+                    <div>
+                        <input class="btn btn-success btn-block" type="submit" value="Guardar">
+                        <br>
+                    </div>
+                    <div>
+                        <a href="{% url 'index' %}" id="inicio"><input type="button" value="Regresar" class="btn btn-info btn-block" ></a>
+                    </div>
+            </form>
+        </div>
+        <div class="col-12 col-lg-8">
+            <table id="example" class="table table-responsive-xl text-nowrap " cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                    <th>Código de Jefe</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for jef in jefes %}
+                    <tr>
+                        <td>{{jef.codJefe}}</td>
+                        <td>{{jef.nombre}}</td>
+                        <td>{{jef.apellido}}</td>
+                        <td class="text-center">
+                            <a class="text-success" href="{% url 'editar_jefe' jef.codJefe %}">
+                                <i class="far fa-edit"></i>
+                            </a>
+                            <a class="text-danger" href="{% url 'eliminar_jefe' jef.codJefe %}" onclick="if(!confirm('Confirme la eliminación'))return false;">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+    
+{% endblock  %}

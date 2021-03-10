@@ -1,0 +1,42 @@
+{% extends "base.html" %}  
+{% load static %}
+
+
+{% block contenido %}
+<div class="container-xl" id="importorden">
+        <table  id="example" class="table table-responsive-xl text-nowrap " cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Código de equipo</th>
+                    <th>Descripción</th>
+                    <th>Código familia</th>
+                </tr>
+            </thead>
+            <tbody>                
+                {% for equip in equipos %}
+                <tr>
+                    <td>{{ equip.codEquipo}}</td>
+                    <td>{{ equip.descripcionEqui }}</td>
+                    <td>{{ equip.codFamilia }}</td>
+                </tr>                
+                {% endfor %}
+            </tbody>
+        </table>
+        <div>
+            <a href="{% url 'equipo' %}" id="inicio"><input type="button" value="Regresar" class="btn btn-info" ></a>
+        </div>
+</div>
+<br>
+<div class="container-xl" id="import">
+    <div class="row">        
+        <form method="post" enctype="multipart/form-data" action="{% url 'importar_equipo' %}">  
+            {% csrf_token %}  
+            <input type="file" class="" name="xlsfile">  
+            <button type="submit" class="btn btn-success">Subir</button>  
+        </form> 
+    </div>
+</div>
+
+
+
+{% endblock  %}

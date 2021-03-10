@@ -1,0 +1,65 @@
+{% extends "base.html" %}  
+{% load static %}
+
+
+{% block contenido %}
+
+<div class="container-xl" id="index">
+  <div class="row">
+    <div class="col-md-12">
+      {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+<br>
+      <h1>Listado de reparaciones</h1>
+      <table id="example" class="table table-striped table-responsive dataTable" style="width:100%">
+        <thead>
+          <tr>
+            <th>Descripción</th>
+            <th>Fecha</th>
+            <th>Hora Inicial</th>
+            <th>Hora Final</th>
+            <th>Jefe</th>
+            <th>Empleado</th>
+            <th>OT</th>
+            <th>Equipo</th>
+            <th>Estado</th>
+            <th>Aprobado</th>
+            <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for rep in reparaciones  %}
+            <tr>
+              <td>{{rep.descripActi}}</td>
+              <td>{{rep.fecha}}</td>
+              <td>{{rep.horaIni}}</td>
+              <td>{{rep.horaFin}}</td>
+              <td>{{rep.jefe}}</td>
+              <td>{{rep.empleado}}</td>
+              <td>{{rep.ordenTrabajo}}</td>
+              <td>{{rep.codequipo}}</td>
+              <td>{{rep.estadoReparacion}}</td>
+              <td>{{rep.estadoApro}}</td>
+              {% if perms.reparaciones.delete_reparacion %}
+              <td class="text-center">
+                <a class="text-success" href="{% url 'editar_reparacion' rep.id %}">
+                  <i class="far fa-edit"></i>
+                </a>
+                <a class="text-danger" href="{% url 'eliminar_reparacion' rep.id %}">
+                  <i class="far fa-trash-alt"></i>
+                </a>
+              </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="reparacion/">
+        <input type="submit" class="btn btn-success" value="Agregar reparación">
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,29 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block contenido %}
+<div class="container-xl" id="login">
+    <div class="row">
+      <div class="col-11 col-md-6 offset-md-0">
+        <section class="form-register">
+        <center>
+          <img src="https://fundahrse.org/wp-content/uploads/2020/05/la-grecia.png" alt=""  width="200" height="">
+        </center>
+        <br>
+        <form action="" method="POST" class="">
+          <h3>Iniciar Sesión</h3>
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="btn btn-lg btn-primary" type="submit" id="entrar">Entrar</button>
+        </form>
+        <center>
+          <p class="mt-5 mb-3 text-muted">&copy; 2020  - 2021</p>
+        </center>
+      </section>
+     </div>
+   </div>
+ </div>
+    
+{% endblock contenido %}
+    

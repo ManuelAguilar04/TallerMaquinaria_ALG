@@ -1,0 +1,44 @@
+{% extends "base.html" %}  
+{% load static %}
+
+
+{% block contenido %}
+<div class="container-xl" id="importorden">
+        <table  id="example" class="table table-responsive-xl text-nowrap " cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Código de orden</th>
+                    <th>Descripción</th>
+                    <th>Código de equipo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>                
+                {% for trab in trabajos %}
+                <tr>
+                    <td>{{ trab.codOrdenTrab}}</td>
+                    <td>{{ trab.descOrden }}</td>
+                    <td>{{ trab.codEquipo }}</td>
+                    <td>{{ trab.estado }}</td>
+                </tr>                
+                {% endfor %}
+            </tbody>
+        </table>
+        <div>
+            <a href="{% url 'orden-de-trabajo' %}" id="inicio"><input type="button" value="Regresar" class="btn btn-info" ></a>
+        </div>
+</div>
+<br>
+<div class="container-xl" id="import">
+    <div class="row">        
+        <form method="post" enctype="multipart/form-data" action="{% url 'importar_orden' %}">  
+            {% csrf_token %}  
+            <input type="file" class="" name="xlsfile">  
+            <button type="submit" class="btn btn-success">Subir</button>  
+        </form> 
+    </div>
+</div>
+
+
+
+{% endblock  %}

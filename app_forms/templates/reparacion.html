@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+
+{% block contenido %}
+<div class="container-xl" id="reparacion">
+  <div class="row">
+    {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+    <div class="col-md-12">
+      <div class="card card-default">
+        <div class="card-header">
+          <h1 class="card-title">Reparaciones</h1>
+        </div>
+        <div class="card-body">
+          {% if id %}
+        <form action="{% url 'editar_reparacion' reparacion.id %}" method="post">
+        {% else %}
+        <form action="{% url 'guardar_reparacion' %}" method="post">
+        {% endif %}
+          {% csrf_token %}
+          {{ form.as_p }}
+        </div>
+        <div class="card-footer">
+          <input type="submit" class="btn btn-success btn-block" value="Agregar reparación">
+          <input type="submit" class="btn btn-info btn-block" value="Regresar"><a class=""href="{% url 'index' %}">
+        </div>
+      </div>
+      
+      <br>
+    </div>
+  </div>
+</div>
+  
+{% endblock contenido %}

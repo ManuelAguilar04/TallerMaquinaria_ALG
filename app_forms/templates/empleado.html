@@ -1,0 +1,71 @@
+{% extends "base.html" %}  
+{% load static %}
+
+
+{% block contenido %}
+
+<div class="container-xl" id="empleado">
+    <h1>Gestión de Empleado</h1>
+    {% if messages %}
+        {% for messages in messages %}
+            <div class="alert alert-success">{{ message }}</div>             
+        {% endfor %}
+    {% endif %}
+    <div class="row">
+        <div class="col-12 col-lg-3">            
+            {% if codEmpleado %}
+            <form action=" {% url 'editar_empleado' codEmpleado %} " method="post">
+            {% else %}
+            <form action=" {% url 'empleado' %} " method="post">
+            {% endif %}
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div>
+                    <input class="btn btn-success btn-block" type="submit" value="Guardar">
+                    <br>
+                </div>
+                <div>
+                    <a href="{% url 'index' %}" id="inicio"><input type="button" value="Regresar" class="btn btn-info btn-block" ></a>
+                </div>
+            </form>
+        </div>
+        <div class="col-12 col-lg-9 " >
+            <table id="example" class="display responsive nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Código Empleado</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Jefe</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emp in empleados  %}
+                    <tr>
+                        <td>{{emp.codEmpleado}}</td>
+                        <td>{{emp.nombres}}</td>
+                        <td>{{emp.apellidos}}</td>
+                        <td>{{emp.jefe}}</td>
+                        <td class="text-center">
+                            <a class="text-success" href="{% url 'editar_empleado' emp.codEmpleado %}">
+                                <i class="far fa-edit"></i>
+                            </a>
+                            <a class="text-danger" href="{% url 'eliminar_empleado' emp.codEmpleado %}" onclick="if(!confirm('Confirme la eliminación'))return false;">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                            <a href="{% url 'importar_empleado_vista' %}" class="text-info">
+                                <i class="fas fa-file-upload"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+    <br>
+</div>
+    
+{% endblock  %}
+    

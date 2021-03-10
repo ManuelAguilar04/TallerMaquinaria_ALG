@@ -1,0 +1,63 @@
+{% extends "base.html" %}  
+{% load static %}
+
+
+{% block contenido %}
+
+<div class="container-xl" id="equipo">
+    <h1>Gestión de Familia Vehículo</h1> 
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            
+            {% if id %}
+            <form action="{% url 'editar_familia' id %}" method="post">
+            {% else %}
+            <form action=" {% url 'familia' %} " method="post">
+            {% endif %}
+                {% csrf_token %}
+                {{ form.as_p }}
+                    <div>
+                        <input class="btn btn-success btn-block" type="submit" value="Guardar">
+                        <br>
+                    </div>
+                    <div>
+                        <a href="{% url 'index' %}" id="inicio"><input type="button" value="Regresar" class="btn btn-info btn-block" ></a>
+                    </div>
+            </form>
+        </div>
+        <div class="col-12 col-lg-8">
+            <table id="example" class="table table-responsive-xl text-nowrap " cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                    <th>ID Familia</th>
+                    <th>Descripción Familia</th>
+                    <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fam in familias %}
+                    <tr>
+                        <td>{{fam.id}}</td>                        
+                        <td>{{fam.descripcionFamilia}}</td>                        
+                        <td class="text-center">
+                            <a class="text-success" href="{% url 'editar_familia' fam.id %}">
+                                <i class="far fa-edit"></i>
+                            </a>
+                            <a class="text-danger" href="{% url 'eliminar_familia' fam.id %}" onclick="if(!confirm('Confirme la eliminación'))return false;">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+    
+{% endblock  %}

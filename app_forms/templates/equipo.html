@@ -1,0 +1,68 @@
+{% extends "base.html" %}  
+{% load static %}
+
+
+{% block contenido %}
+
+<div class="container-xl" id="equipo">
+    <h1>Gestión de Equipo</h1>
+        {% if messages %}                
+            {% for messages in messages %}
+        <div class="alert alert-success">{{ message }}</div>             
+    {% endfor %}
+{% endif %} 
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            {% if codEquipo %}
+            <form action=" {% url 'editar_equipo' codEquipo %} " method="post">
+            {% else %}
+            <form action=" {% url 'equipo' %} " method="post">
+            {% endif %}
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div>
+                    <input class="btn btn-success btn-block" type="submit" value="Guardar">
+                    <br>
+                </div>
+                <div>
+                    <a href="{% url 'index' %}" id="inicio"><input type="button" value="Regresar" class="btn btn-info btn-block" ></a>
+                </div>
+            </form>
+        </div>
+        <div class="col-12 col-lg-8">
+            <table id="example" class="table table-responsive-xl text-nowrap " cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                    <th>Código de Equipo</th>
+                    <th>Descripción de Equipo</th>
+                    <th>Código de Familia</th>
+                    <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for equip in equipos  %}
+                    <tr>
+                        <td>{{equip.codEquipo}}</td>
+                        <td>{{equip.descripcionEqui}}</td>
+                        <td>{{equip.codFamilia}}</td>
+                        <td class="text-center">
+                            <a class="text-success" href="{% url 'editar_equipo' equip.codEquipo %}">
+                                <i class="far fa-edit"></i>
+                            </a>
+                            <a class="text-danger" href="{% url 'eliminar_equipo' equip.codEquipo %}" onclick="if(!confirm('Confirme la eliminación'))return false;">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                            <a href="{% url 'importar_equipo_vista' %}" class="text-info">
+                                <i class="fas fa-file-upload"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+    
+{% endblock  %}
+    
